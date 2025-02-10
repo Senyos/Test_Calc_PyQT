@@ -90,19 +90,16 @@ def click_equal():
     result = ""
     flag = False
     flag_operator = False
-    flag_closed_bracket = False
 
     print(calc_enter_text)
     count = 0
     count_end = len(calc_enter_text)
 
     for _ in calc_enter_text:
-        if flag_operator: flag_closed_bracket = False
         if _ in numbers:
             flag_operator = False
             num += _
         elif _ in operators:
-            if flag_closed_bracket: num = ""
             if flag:
                 num += ")**(1/2)"
                 flag = False
@@ -113,7 +110,6 @@ def click_equal():
             elif _ == operators[4]:
                 _ = "**"
                 result = result + num + _
-                print(result, num, _)
             elif _ == operators[5]:
                 flag = True
                 if flag_operator:
@@ -124,14 +120,16 @@ def click_equal():
             num = ""
         elif _ == "(":
             result = result + num + _
+            num = ""
         elif _ == ")":
-            flag_closed_bracket = True
             result = result + num + _
+            num = ""
         elif _ == ",":
             result = result + num + "."
+            num = ""
         else: pass
         count += 1
-        if count >= count_end and flag_closed_bracket == False: result = result + num
+        if count >= count_end: result = result + num
         if count >= count_end and flag: result += ")**(1/2)"
     print(result)
 
