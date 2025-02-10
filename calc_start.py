@@ -90,12 +90,13 @@ def click_equal():
     result = ""
     flag = False
     flag_operator = False
+    flag_start = False
 
     print(calc_enter_text)
     count = 0
     count_end = len(calc_enter_text)
-
-    for _ in calc_enter_text:
+    flag_start = True
+    for _ in calc_enter_text:     
         if _ in numbers:
             flag_operator = False
             num += _
@@ -114,6 +115,8 @@ def click_equal():
                 flag = True
                 if flag_operator:
                     result = result + num + "("
+                elif flag_operator == False and flag_start:
+                    result = result + num + "("
                 else: result = result + num + "*("
                 flag_operator = False
             else: result = result + num + _
@@ -131,6 +134,7 @@ def click_equal():
         count += 1
         if count >= count_end: result = result + num
         if count >= count_end and flag: result += ")**(1/2)"
+        flag_start = False
     print(result)
 
     try:
